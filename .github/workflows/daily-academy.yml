@@ -8,7 +8,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: "0 21 * * *" # 06:00 JST
+    - cron: "0 21 * * *" # 05:00 JST
 
 permissions:
   contents: write
