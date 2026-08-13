@@ -1,0 +1,1182 @@
+{
+  "name": "AI Daily Academy",
+  "duration_weeks": 24,
+  "days": [
+    {
+      "day": 1,
+      "week": 1,
+      "day_in_week": 1,
+      "week_title": "AIの全体像",
+      "topic": "生成AIとLLM"
+    },
+    {
+      "day": 2,
+      "week": 1,
+      "day_in_week": 2,
+      "week_title": "AIの全体像",
+      "topic": "トークンとコンテキスト"
+    },
+    {
+      "day": 3,
+      "week": 1,
+      "day_in_week": 3,
+      "week_title": "AIの全体像",
+      "topic": "Embeddingとベクトル"
+    },
+    {
+      "day": 4,
+      "week": 1,
+      "day_in_week": 4,
+      "week_title": "AIの全体像",
+      "topic": "学習と推論"
+    },
+    {
+      "day": 5,
+      "week": 1,
+      "day_in_week": 5,
+      "week_title": "AIの全体像",
+      "topic": "ハルシネーション"
+    },
+    {
+      "day": 6,
+      "week": 1,
+      "day_in_week": 6,
+      "week_title": "AIの全体像",
+      "topic": "主要モデルの違い"
+    },
+    {
+      "day": 7,
+      "week": 1,
+      "day_in_week": 7,
+      "week_title": "AIの全体像",
+      "topic": "週次復習"
+    },
+    {
+      "day": 8,
+      "week": 2,
+      "day_in_week": 1,
+      "week_title": "プロンプト基礎",
+      "topic": "目的・背景・制約"
+    },
+    {
+      "day": 9,
+      "week": 2,
+      "day_in_week": 2,
+      "week_title": "プロンプト基礎",
+      "topic": "役割と出力形式"
+    },
+    {
+      "day": 10,
+      "week": 2,
+      "day_in_week": 3,
+      "week_title": "プロンプト基礎",
+      "topic": "Few-shot"
+    },
+    {
+      "day": 11,
+      "week": 2,
+      "day_in_week": 4,
+      "week_title": "プロンプト基礎",
+      "topic": "分解して考えさせる"
+    },
+    {
+      "day": 12,
+      "week": 2,
+      "day_in_week": 5,
+      "week_title": "プロンプト基礎",
+      "topic": "評価と改善"
+    },
+    {
+      "day": 13,
+      "week": 2,
+      "day_in_week": 6,
+      "week_title": "プロンプト基礎",
+      "topic": "実務テンプレート"
+    },
+    {
+      "day": 14,
+      "week": 2,
+      "day_in_week": 7,
+      "week_title": "プロンプト基礎",
+      "topic": "週次復習"
+    },
+    {
+      "day": 15,
+      "week": 3,
+      "day_in_week": 1,
+      "week_title": "LLMの仕組み",
+      "topic": "Transformer概観"
+    },
+    {
+      "day": 16,
+      "week": 3,
+      "day_in_week": 2,
+      "week_title": "LLMの仕組み",
+      "topic": "Attention"
+    },
+    {
+      "day": 17,
+      "week": 3,
+      "day_in_week": 3,
+      "week_title": "LLMの仕組み",
+      "topic": "位置情報"
+    },
+    {
+      "day": 18,
+      "week": 3,
+      "day_in_week": 4,
+      "week_title": "LLMの仕組み",
+      "topic": "事前学習"
+    },
+    {
+      "day": 19,
+      "week": 3,
+      "day_in_week": 5,
+      "week_title": "LLMの仕組み",
+      "topic": "Instruction tuning"
+    },
+    {
+      "day": 20,
+      "week": 3,
+      "day_in_week": 6,
+      "week_title": "LLMの仕組み",
+      "topic": "推論モデル"
+    },
+    {
+      "day": 21,
+      "week": 3,
+      "day_in_week": 7,
+      "week_title": "LLMの仕組み",
+      "topic": "週次復習"
+    },
+    {
+      "day": 22,
+      "week": 4,
+      "day_in_week": 1,
+      "week_title": "AIリテラシー",
+      "topic": "検証方法"
+    },
+    {
+      "day": 23,
+      "week": 4,
+      "day_in_week": 2,
+      "week_title": "AIリテラシー",
+      "topic": "一次情報の見方"
+    },
+    {
+      "day": 24,
+      "week": 4,
+      "day_in_week": 3,
+      "week_title": "AIリテラシー",
+      "topic": "バイアス"
+    },
+    {
+      "day": 25,
+      "week": 4,
+      "day_in_week": 4,
+      "week_title": "AIリテラシー",
+      "topic": "著作権と引用"
+    },
+    {
+      "day": 26,
+      "week": 4,
+      "day_in_week": 5,
+      "week_title": "AIリテラシー",
+      "topic": "プライバシー"
+    },
+    {
+      "day": 27,
+      "week": 4,
+      "day_in_week": 6,
+      "week_title": "AIリテラシー",
+      "topic": "セキュリティ"
+    },
+    {
+      "day": 28,
+      "week": 4,
+      "day_in_week": 7,
+      "week_title": "AIリテラシー",
+      "topic": "週次復習"
+    },
+    {
+      "day": 29,
+      "week": 5,
+      "day_in_week": 1,
+      "week_title": "API入門",
+      "topic": "APIとは"
+    },
+    {
+      "day": 30,
+      "week": 5,
+      "day_in_week": 2,
+      "week_title": "API入門",
+      "topic": "HTTPの基礎"
+    },
+    {
+      "day": 31,
+      "week": 5,
+      "day_in_week": 3,
+      "week_title": "API入門",
+      "topic": "JSON"
+    },
+    {
+      "day": 32,
+      "week": 5,
+      "day_in_week": 4,
+      "week_title": "API入門",
+      "topic": "認証とAPIキー"
+    },
+    {
+      "day": 33,
+      "week": 5,
+      "day_in_week": 5,
+      "week_title": "API入門",
+      "topic": "Responses API"
+    },
+    {
+      "day": 34,
+      "week": 5,
+      "day_in_week": 6,
+      "week_title": "API入門",
+      "topic": "エラー処理"
+    },
+    {
+      "day": 35,
+      "week": 5,
+      "day_in_week": 7,
+      "week_title": "API入門",
+      "topic": "週次復習"
+    },
+    {
+      "day": 36,
+      "week": 6,
+      "day_in_week": 1,
+      "week_title": "PythonでAI",
+      "topic": "Python最小基礎"
+    },
+    {
+      "day": 37,
+      "week": 6,
+      "day_in_week": 2,
+      "week_title": "PythonでAI",
+      "topic": "SDK利用"
+    },
+    {
+      "day": 38,
+      "week": 6,
+      "day_in_week": 3,
+      "week_title": "PythonでAI",
+      "topic": "ファイル入出力"
+    },
+    {
+      "day": 39,
+      "week": 6,
+      "day_in_week": 4,
+      "week_title": "PythonでAI",
+      "topic": "JSON処理"
+    },
+    {
+      "day": 40,
+      "week": 6,
+      "day_in_week": 5,
+      "week_title": "PythonでAI",
+      "topic": "例外処理"
+    },
+    {
+      "day": 41,
+      "week": 6,
+      "day_in_week": 6,
+      "week_title": "PythonでAI",
+      "topic": "小さなAIアプリ"
+    },
+    {
+      "day": 42,
+      "week": 6,
+      "day_in_week": 7,
+      "week_title": "PythonでAI",
+      "topic": "週次復習"
+    },
+    {
+      "day": 43,
+      "week": 7,
+      "day_in_week": 1,
+      "week_title": "RAG基礎",
+      "topic": "RAGとは"
+    },
+    {
+      "day": 44,
+      "week": 7,
+      "day_in_week": 2,
+      "week_title": "RAG基礎",
+      "topic": "文書分割"
+    },
+    {
+      "day": 45,
+      "week": 7,
+      "day_in_week": 3,
+      "week_title": "RAG基礎",
+      "topic": "Embedding"
+    },
+    {
+      "day": 46,
+      "week": 7,
+      "day_in_week": 4,
+      "week_title": "RAG基礎",
+      "topic": "ベクトル検索"
+    },
+    {
+      "day": 47,
+      "week": 7,
+      "day_in_week": 5,
+      "week_title": "RAG基礎",
+      "topic": "検索→生成"
+    },
+    {
+      "day": 48,
+      "week": 7,
+      "day_in_week": 6,
+      "week_title": "RAG基礎",
+      "topic": "評価"
+    },
+    {
+      "day": 49,
+      "week": 7,
+      "day_in_week": 7,
+      "week_title": "RAG基礎",
+      "topic": "週次復習"
+    },
+    {
+      "day": 50,
+      "week": 8,
+      "day_in_week": 1,
+      "week_title": "RAG実践",
+      "topic": "PDF検索"
+    },
+    {
+      "day": 51,
+      "week": 8,
+      "day_in_week": 2,
+      "week_title": "RAG実践",
+      "topic": "社内規程QA"
+    },
+    {
+      "day": 52,
+      "week": 8,
+      "day_in_week": 3,
+      "week_title": "RAG実践",
+      "topic": "引用付き回答"
+    },
+    {
+      "day": 53,
+      "week": 8,
+      "day_in_week": 4,
+      "week_title": "RAG実践",
+      "topic": "検索精度改善"
+    },
+    {
+      "day": 54,
+      "week": 8,
+      "day_in_week": 5,
+      "week_title": "RAG実践",
+      "topic": "メタデータ"
+    },
+    {
+      "day": 55,
+      "week": 8,
+      "day_in_week": 6,
+      "week_title": "RAG実践",
+      "topic": "権限設計"
+    },
+    {
+      "day": 56,
+      "week": 8,
+      "day_in_week": 7,
+      "week_title": "RAG実践",
+      "topic": "週次復習"
+    },
+    {
+      "day": 57,
+      "week": 9,
+      "day_in_week": 1,
+      "week_title": "ツール利用",
+      "topic": "Function calling"
+    },
+    {
+      "day": 58,
+      "week": 9,
+      "day_in_week": 2,
+      "week_title": "ツール利用",
+      "topic": "ツール設計"
+    },
+    {
+      "day": 59,
+      "week": 9,
+      "day_in_week": 3,
+      "week_title": "ツール利用",
+      "topic": "検索ツール"
+    },
+    {
+      "day": 60,
+      "week": 9,
+      "day_in_week": 4,
+      "week_title": "ツール利用",
+      "topic": "メール/カレンダー"
+    },
+    {
+      "day": 61,
+      "week": 9,
+      "day_in_week": 5,
+      "week_title": "ツール利用",
+      "topic": "データ取得"
+    },
+    {
+      "day": 62,
+      "week": 9,
+      "day_in_week": 6,
+      "week_title": "ツール利用",
+      "topic": "失敗時の設計"
+    },
+    {
+      "day": 63,
+      "week": 9,
+      "day_in_week": 7,
+      "week_title": "ツール利用",
+      "topic": "週次復習"
+    },
+    {
+      "day": 64,
+      "week": 10,
+      "day_in_week": 1,
+      "week_title": "AIエージェント",
+      "topic": "Agentとは"
+    },
+    {
+      "day": 65,
+      "week": 10,
+      "day_in_week": 2,
+      "week_title": "AIエージェント",
+      "topic": "計画と実行"
+    },
+    {
+      "day": 66,
+      "week": 10,
+      "day_in_week": 3,
+      "week_title": "AIエージェント",
+      "topic": "メモリ"
+    },
+    {
+      "day": 67,
+      "week": 10,
+      "day_in_week": 4,
+      "week_title": "AIエージェント",
+      "topic": "複数ツール"
+    },
+    {
+      "day": 68,
+      "week": 10,
+      "day_in_week": 5,
+      "week_title": "AIエージェント",
+      "topic": "Human-in-the-loop"
+    },
+    {
+      "day": 69,
+      "week": 10,
+      "day_in_week": 6,
+      "week_title": "AIエージェント",
+      "topic": "安全設計"
+    },
+    {
+      "day": 70,
+      "week": 10,
+      "day_in_week": 7,
+      "week_title": "AIエージェント",
+      "topic": "週次復習"
+    },
+    {
+      "day": 71,
+      "week": 11,
+      "day_in_week": 1,
+      "week_title": "自動化基礎",
+      "topic": "GitHub Actions"
+    },
+    {
+      "day": 72,
+      "week": 11,
+      "day_in_week": 2,
+      "week_title": "自動化基礎",
+      "topic": "cron"
+    },
+    {
+      "day": 73,
+      "week": 11,
+      "day_in_week": 3,
+      "week_title": "自動化基礎",
+      "topic": "Secrets"
+    },
+    {
+      "day": 74,
+      "week": 11,
+      "day_in_week": 4,
+      "week_title": "自動化基礎",
+      "topic": "成果物"
+    },
+    {
+      "day": 75,
+      "week": 11,
+      "day_in_week": 5,
+      "week_title": "自動化基礎",
+      "topic": "ログ"
+    },
+    {
+      "day": 76,
+      "week": 11,
+      "day_in_week": 6,
+      "week_title": "自動化基礎",
+      "topic": "リトライ"
+    },
+    {
+      "day": 77,
+      "week": 11,
+      "day_in_week": 7,
+      "week_title": "自動化基礎",
+      "topic": "週次復習"
+    },
+    {
+      "day": 78,
+      "week": 12,
+      "day_in_week": 1,
+      "week_title": "n8n/ワークフロー",
+      "topic": "ノード設計"
+    },
+    {
+      "day": 79,
+      "week": 12,
+      "day_in_week": 2,
+      "week_title": "n8n/ワークフロー",
+      "topic": "Webhook"
+    },
+    {
+      "day": 80,
+      "week": 12,
+      "day_in_week": 3,
+      "week_title": "n8n/ワークフロー",
+      "topic": "分岐"
+    },
+    {
+      "day": 81,
+      "week": 12,
+      "day_in_week": 4,
+      "week_title": "n8n/ワークフロー",
+      "topic": "承認ゲート"
+    },
+    {
+      "day": 82,
+      "week": 12,
+      "day_in_week": 5,
+      "week_title": "n8n/ワークフロー",
+      "topic": "API接続"
+    },
+    {
+      "day": 83,
+      "week": 12,
+      "day_in_week": 6,
+      "week_title": "n8n/ワークフロー",
+      "topic": "運用監視"
+    },
+    {
+      "day": 84,
+      "week": 12,
+      "day_in_week": 7,
+      "week_title": "n8n/ワークフロー",
+      "topic": "週次復習"
+    },
+    {
+      "day": 85,
+      "week": 13,
+      "day_in_week": 1,
+      "week_title": "音声AI",
+      "topic": "TTS"
+    },
+    {
+      "day": 86,
+      "week": 13,
+      "day_in_week": 2,
+      "week_title": "音声AI",
+      "topic": "STT"
+    },
+    {
+      "day": 87,
+      "week": 13,
+      "day_in_week": 3,
+      "week_title": "音声AI",
+      "topic": "音声UI"
+    },
+    {
+      "day": 88,
+      "week": 13,
+      "day_in_week": 4,
+      "week_title": "音声AI",
+      "topic": "Realtime"
+    },
+    {
+      "day": 89,
+      "week": 13,
+      "day_in_week": 5,
+      "week_title": "音声AI",
+      "topic": "Podcast自動化"
+    },
+    {
+      "day": 90,
+      "week": 13,
+      "day_in_week": 6,
+      "week_title": "音声AI",
+      "topic": "品質と速度"
+    },
+    {
+      "day": 91,
+      "week": 13,
+      "day_in_week": 7,
+      "week_title": "音声AI",
+      "topic": "週次復習"
+    },
+    {
+      "day": 92,
+      "week": 14,
+      "day_in_week": 1,
+      "week_title": "画像・マルチモーダル",
+      "topic": "画像理解"
+    },
+    {
+      "day": 93,
+      "week": 14,
+      "day_in_week": 2,
+      "week_title": "画像・マルチモーダル",
+      "topic": "画像生成"
+    },
+    {
+      "day": 94,
+      "week": 14,
+      "day_in_week": 3,
+      "week_title": "画像・マルチモーダル",
+      "topic": "OCRの考え方"
+    },
+    {
+      "day": 95,
+      "week": 14,
+      "day_in_week": 4,
+      "week_title": "画像・マルチモーダル",
+      "topic": "図表理解"
+    },
+    {
+      "day": 96,
+      "week": 14,
+      "day_in_week": 5,
+      "week_title": "画像・マルチモーダル",
+      "topic": "動画AI概観"
+    },
+    {
+      "day": 97,
+      "week": 14,
+      "day_in_week": 6,
+      "week_title": "画像・マルチモーダル",
+      "topic": "業務活用"
+    },
+    {
+      "day": 98,
+      "week": 14,
+      "day_in_week": 7,
+      "week_title": "画像・マルチモーダル",
+      "topic": "週次復習"
+    },
+    {
+      "day": 99,
+      "week": 15,
+      "day_in_week": 1,
+      "week_title": "データ分析",
+      "topic": "CSV分析"
+    },
+    {
+      "day": 100,
+      "week": 15,
+      "day_in_week": 2,
+      "week_title": "データ分析",
+      "topic": "表計算連携"
+    },
+    {
+      "day": 101,
+      "week": 15,
+      "day_in_week": 3,
+      "week_title": "データ分析",
+      "topic": "可視化"
+    },
+    {
+      "day": 102,
+      "week": 15,
+      "day_in_week": 4,
+      "week_title": "データ分析",
+      "topic": "異常検知"
+    },
+    {
+      "day": 103,
+      "week": 15,
+      "day_in_week": 5,
+      "week_title": "データ分析",
+      "topic": "レポート生成"
+    },
+    {
+      "day": 104,
+      "week": 15,
+      "day_in_week": 6,
+      "week_title": "データ分析",
+      "topic": "意思決定支援"
+    },
+    {
+      "day": 105,
+      "week": 15,
+      "day_in_week": 7,
+      "week_title": "データ分析",
+      "topic": "週次復習"
+    },
+    {
+      "day": 106,
+      "week": 16,
+      "day_in_week": 1,
+      "week_title": "AIコーディング",
+      "topic": "コード生成"
+    },
+    {
+      "day": 107,
+      "week": 16,
+      "day_in_week": 2,
+      "week_title": "AIコーディング",
+      "topic": "デバッグ"
+    },
+    {
+      "day": 108,
+      "week": 16,
+      "day_in_week": 3,
+      "week_title": "AIコーディング",
+      "topic": "テスト"
+    },
+    {
+      "day": 109,
+      "week": 16,
+      "day_in_week": 4,
+      "week_title": "AIコーディング",
+      "topic": "リファクタリング"
+    },
+    {
+      "day": 110,
+      "week": 16,
+      "day_in_week": 5,
+      "week_title": "AIコーディング",
+      "topic": "レビュー"
+    },
+    {
+      "day": 111,
+      "week": 16,
+      "day_in_week": 6,
+      "week_title": "AIコーディング",
+      "topic": "AI IDE/Agent"
+    },
+    {
+      "day": 112,
+      "week": 16,
+      "day_in_week": 7,
+      "week_title": "AIコーディング",
+      "topic": "週次復習"
+    },
+    {
+      "day": 113,
+      "week": 17,
+      "day_in_week": 1,
+      "week_title": "業務AI設計",
+      "topic": "業務分解"
+    },
+    {
+      "day": 114,
+      "week": 17,
+      "day_in_week": 2,
+      "week_title": "業務AI設計",
+      "topic": "ROI"
+    },
+    {
+      "day": 115,
+      "week": 17,
+      "day_in_week": 3,
+      "week_title": "業務AI設計",
+      "topic": "PoC"
+    },
+    {
+      "day": 116,
+      "week": 17,
+      "day_in_week": 4,
+      "week_title": "業務AI設計",
+      "topic": "データ設計"
+    },
+    {
+      "day": 117,
+      "week": 17,
+      "day_in_week": 5,
+      "week_title": "業務AI設計",
+      "topic": "運用設計"
+    },
+    {
+      "day": 118,
+      "week": 17,
+      "day_in_week": 6,
+      "week_title": "業務AI設計",
+      "topic": "導入ロードマップ"
+    },
+    {
+      "day": 119,
+      "week": 17,
+      "day_in_week": 7,
+      "week_title": "業務AI設計",
+      "topic": "週次復習"
+    },
+    {
+      "day": 120,
+      "week": 18,
+      "day_in_week": 1,
+      "week_title": "企業AI・情報システム",
+      "topic": "社内検索"
+    },
+    {
+      "day": 121,
+      "week": 18,
+      "day_in_week": 2,
+      "week_title": "企業AI・情報システム",
+      "topic": "ヘルプデスク"
+    },
+    {
+      "day": 122,
+      "week": 18,
+      "day_in_week": 3,
+      "week_title": "企業AI・情報システム",
+      "topic": "権限管理"
+    },
+    {
+      "day": 123,
+      "week": 18,
+      "day_in_week": 4,
+      "week_title": "企業AI・情報システム",
+      "topic": "監査ログ"
+    },
+    {
+      "day": 124,
+      "week": 18,
+      "day_in_week": 5,
+      "week_title": "企業AI・情報システム",
+      "topic": "Shadow AI"
+    },
+    {
+      "day": 125,
+      "week": 18,
+      "day_in_week": 6,
+      "week_title": "企業AI・情報システム",
+      "topic": "ガバナンス"
+    },
+    {
+      "day": 126,
+      "week": 18,
+      "day_in_week": 7,
+      "week_title": "企業AI・情報システム",
+      "topic": "週次復習"
+    },
+    {
+      "day": 127,
+      "week": 19,
+      "day_in_week": 1,
+      "week_title": "製造・現場AI",
+      "topic": "品質管理"
+    },
+    {
+      "day": 128,
+      "week": 19,
+      "day_in_week": 2,
+      "week_title": "製造・現場AI",
+      "topic": "保全"
+    },
+    {
+      "day": 129,
+      "week": 19,
+      "day_in_week": 3,
+      "week_title": "製造・現場AI",
+      "topic": "需要予測"
+    },
+    {
+      "day": 130,
+      "week": 19,
+      "day_in_week": 4,
+      "week_title": "製造・現場AI",
+      "topic": "手順書AI"
+    },
+    {
+      "day": 131,
+      "week": 19,
+      "day_in_week": 5,
+      "week_title": "製造・現場AI",
+      "topic": "画像検査"
+    },
+    {
+      "day": 132,
+      "week": 19,
+      "day_in_week": 6,
+      "week_title": "製造・現場AI",
+      "topic": "現場導入"
+    },
+    {
+      "day": 133,
+      "week": 19,
+      "day_in_week": 7,
+      "week_title": "製造・現場AI",
+      "topic": "週次復習"
+    },
+    {
+      "day": 134,
+      "week": 20,
+      "day_in_week": 1,
+      "week_title": "AIセキュリティ",
+      "topic": "Prompt injection"
+    },
+    {
+      "day": 135,
+      "week": 20,
+      "day_in_week": 2,
+      "week_title": "AIセキュリティ",
+      "topic": "データ漏洩"
+    },
+    {
+      "day": 136,
+      "week": 20,
+      "day_in_week": 3,
+      "week_title": "AIセキュリティ",
+      "topic": "権限最小化"
+    },
+    {
+      "day": 137,
+      "week": 20,
+      "day_in_week": 4,
+      "week_title": "AIセキュリティ",
+      "topic": "サンドボックス"
+    },
+    {
+      "day": 138,
+      "week": 20,
+      "day_in_week": 5,
+      "week_title": "AIセキュリティ",
+      "topic": "サプライチェーン"
+    },
+    {
+      "day": 139,
+      "week": 20,
+      "day_in_week": 6,
+      "week_title": "AIセキュリティ",
+      "topic": "レッドチーム"
+    },
+    {
+      "day": 140,
+      "week": 20,
+      "day_in_week": 7,
+      "week_title": "AIセキュリティ",
+      "topic": "週次復習"
+    },
+    {
+      "day": 141,
+      "week": 21,
+      "day_in_week": 1,
+      "week_title": "モデル選定とコスト",
+      "topic": "性能比較"
+    },
+    {
+      "day": 142,
+      "week": 21,
+      "day_in_week": 2,
+      "week_title": "モデル選定とコスト",
+      "topic": "速度"
+    },
+    {
+      "day": 143,
+      "week": 21,
+      "day_in_week": 3,
+      "week_title": "モデル選定とコスト",
+      "topic": "価格"
+    },
+    {
+      "day": 144,
+      "week": 21,
+      "day_in_week": 4,
+      "week_title": "モデル選定とコスト",
+      "topic": "Context"
+    },
+    {
+      "day": 145,
+      "week": 21,
+      "day_in_week": 5,
+      "week_title": "モデル選定とコスト",
+      "topic": "小型モデル"
+    },
+    {
+      "day": 146,
+      "week": 21,
+      "day_in_week": 6,
+      "week_title": "モデル選定とコスト",
+      "topic": "ルーティング"
+    },
+    {
+      "day": 147,
+      "week": 21,
+      "day_in_week": 7,
+      "week_title": "モデル選定とコスト",
+      "topic": "週次復習"
+    },
+    {
+      "day": 148,
+      "week": 22,
+      "day_in_week": 1,
+      "week_title": "評価・Evals",
+      "topic": "正解基準"
+    },
+    {
+      "day": 149,
+      "week": 22,
+      "day_in_week": 2,
+      "week_title": "評価・Evals",
+      "topic": "テストセット"
+    },
+    {
+      "day": 150,
+      "week": 22,
+      "day_in_week": 3,
+      "week_title": "評価・Evals",
+      "topic": "LLM-as-judge"
+    },
+    {
+      "day": 151,
+      "week": 22,
+      "day_in_week": 4,
+      "week_title": "評価・Evals",
+      "topic": "回帰テスト"
+    },
+    {
+      "day": 152,
+      "week": 22,
+      "day_in_week": 5,
+      "week_title": "評価・Evals",
+      "topic": "品質監視"
+    },
+    {
+      "day": 153,
+      "week": 22,
+      "day_in_week": 6,
+      "week_title": "評価・Evals",
+      "topic": "改善サイクル"
+    },
+    {
+      "day": 154,
+      "week": 22,
+      "day_in_week": 7,
+      "week_title": "評価・Evals",
+      "topic": "週次復習"
+    },
+    {
+      "day": 155,
+      "week": 23,
+      "day_in_week": 1,
+      "week_title": "最新AIを読む力",
+      "topic": "リリースノート"
+    },
+    {
+      "day": 156,
+      "week": 23,
+      "day_in_week": 2,
+      "week_title": "最新AIを読む力",
+      "topic": "論文の読み方"
+    },
+    {
+      "day": 157,
+      "week": 23,
+      "day_in_week": 3,
+      "week_title": "最新AIを読む力",
+      "topic": "ベンチマーク"
+    },
+    {
+      "day": 158,
+      "week": 23,
+      "day_in_week": 4,
+      "week_title": "最新AIを読む力",
+      "topic": "誇張を見抜く"
+    },
+    {
+      "day": 159,
+      "week": 23,
+      "day_in_week": 5,
+      "week_title": "最新AIを読む力",
+      "topic": "競合比較"
+    },
+    {
+      "day": 160,
+      "week": 23,
+      "day_in_week": 6,
+      "week_title": "最新AIを読む力",
+      "topic": "トレンド整理"
+    },
+    {
+      "day": 161,
+      "week": 23,
+      "day_in_week": 7,
+      "week_title": "最新AIを読む力",
+      "topic": "週次復習"
+    },
+    {
+      "day": 162,
+      "week": 24,
+      "day_in_week": 1,
+      "week_title": "総合実践",
+      "topic": "テーマ決定"
+    },
+    {
+      "day": 163,
+      "week": 24,
+      "day_in_week": 2,
+      "week_title": "総合実践",
+      "topic": "要件定義"
+    },
+    {
+      "day": 164,
+      "week": 24,
+      "day_in_week": 3,
+      "week_title": "総合実践",
+      "topic": "設計"
+    },
+    {
+      "day": 165,
+      "week": 24,
+      "day_in_week": 4,
+      "week_title": "総合実践",
+      "topic": "実装"
+    },
+    {
+      "day": 166,
+      "week": 24,
+      "day_in_week": 5,
+      "week_title": "総合実践",
+      "topic": "テスト"
+    },
+    {
+      "day": 167,
+      "week": 24,
+      "day_in_week": 6,
+      "week_title": "総合実践",
+      "topic": "運用計画"
+    },
+    {
+      "day": 168,
+      "week": 24,
+      "day_in_week": 7,
+      "week_title": "総合実践",
+      "topic": "24週間総復習"
+    }
+  ]
+}
