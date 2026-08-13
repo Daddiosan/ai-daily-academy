@@ -8,7 +8,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: "0 21 * * *" # 05:00 JST
+    - cron: "0 21 * * *" # 06:00 JST
 
 permissions:
   contents: write
@@ -59,15 +59,20 @@ jobs:
           TTS_VOICE: marin
         run: python scripts/create_audio.py
 
+      - name: Create PDF
+        run: python scripts/create_pdf.py
+
       - name: Collect outputs
         id: outputs
         shell: bash
         run: |
           TXT=$(ls -t lessons/day_*.txt | head -n 1)
-          MP3=$(ls -t lessons/day_*.mp3 | head -n 1)
+          MP3="${TXT%.txt}.mp3"
+          PDF="${TXT%.txt}.pdf"
           JSON="${TXT%.txt}.json"
           echo "txt=$TXT" >> "$GITHUB_OUTPUT"
           echo "mp3=$MP3" >> "$GITHUB_OUTPUT"
+          echo "pdf=$PDF" >> "$GITHUB_OUTPUT"
           echo "json=$JSON" >> "$GITHUB_OUTPUT"
 
       - name: Upload artifact
@@ -77,16 +82,17 @@ jobs:
           path: |
             ${{ steps.outputs.outputs.txt }}
             ${{ steps.outputs.outputs.mp3 }}
+            ${{ steps.outputs.outputs.pdf }}
             ${{ steps.outputs.outputs.json }}
           retention-days: 30
 
-      - name: Save progress and text
+      - name: Save progress and text/PDF
         if: ${{ inputs.day == '' }}
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add curriculum/progress.json lessons/*.txt lessons/*.json
+          git add curriculum/progress.json lessons/*.txt lessons/*.json lessons/*.pdf
           if git diff --cached --quiet; then
             echo "No changes."
           else
