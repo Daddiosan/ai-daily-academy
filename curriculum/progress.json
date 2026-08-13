@@ -1,5 +1,11 @@
 {
-  "current_day": 0,
-  "last_completed_date": null,
-  "completed": []
+  "current_day": 1,
+  "last_completed_date": "2026-08-14",
+  "completed": [
+    {
+      "day": 1,
+      "date": "2026-08-14",
+      "topic": "生成AIとLLM"
+    }
+  ]
 }
