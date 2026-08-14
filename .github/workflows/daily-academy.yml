@@ -10,7 +10,7 @@ on:
 
   schedule:
     # 05:00 JST
-    # GitHub Actions cron is UTC.
+    # GitHub Actions cron uses UTC.
     # 20:00 UTC = 05:00 JST next day.
     - cron: "0 20 * * *"
 
@@ -28,7 +28,7 @@ jobs:
 
     steps:
       # ------------------------------------------------------------
-      # 1. Checkout repository
+      # 1. Checkout
       # ------------------------------------------------------------
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,7 +36,7 @@ jobs:
           fetch-depth: 0
 
       # ------------------------------------------------------------
-      # 2. Python setup
+      # 2. Set up Python
       # ------------------------------------------------------------
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -49,6 +49,8 @@ jobs:
       - name: Install ffmpeg
         shell: bash
         run: |
+          set -e
+
           sudo apt-get update
           sudo apt-get install -y ffmpeg
 
@@ -56,12 +58,15 @@ jobs:
       # 4. Install Python dependencies
       # ------------------------------------------------------------
       - name: Install dependencies
+        shell: bash
         run: |
+          set -e
+
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       # ------------------------------------------------------------
-      # 5. Create daily lesson
+      # 5. Create lesson
       # ------------------------------------------------------------
       - name: Create lesson
         id: lesson
@@ -73,17 +78,30 @@ jobs:
           set -e
 
           if [ -n "${{ inputs.day }}" ]; then
-            echo "Creating specified curriculum day: ${{ inputs.day }}"
-            OUTPUT=$(python scripts/create_lesson.py --day "${{ inputs.day }}")
+
+            echo "Creating specified curriculum day:"
+            echo "${{ inputs.day }}"
+
+            OUTPUT=$(python scripts/create_lesson.py \
+              --day "${{ inputs.day }}")
+
           else
+
             echo "Creating next curriculum day automatically."
+
             OUTPUT=$(python scripts/create_lesson.py)
+
           fi
 
           echo "$OUTPUT"
 
-          LESSON_PATH=$(echo "$OUTPUT" | sed -n 's/^LESSON_PATH=//p' | tail -n 1)
-          META_PATH=$(echo "$OUTPUT" | sed -n 's/^META_PATH=//p' | tail -n 1)
+          LESSON_PATH=$(echo "$OUTPUT" \
+            | sed -n 's/^LESSON_PATH=//p' \
+            | tail -n 1)
+
+          META_PATH=$(echo "$OUTPUT" \
+            | sed -n 's/^META_PATH=//p' \
+            | tail -n 1)
 
           if [ -z "$LESSON_PATH" ]; then
             echo "ERROR: LESSON_PATH was not returned."
@@ -91,13 +109,15 @@ jobs:
           fi
 
           if [ ! -f "$LESSON_PATH" ]; then
-            echo "ERROR: Lesson file does not exist: $LESSON_PATH"
+            echo "ERROR: Lesson file does not exist:"
+            echo "$LESSON_PATH"
             exit 1
           fi
 
           echo "lesson_path=$LESSON_PATH" >> "$GITHUB_OUTPUT"
           echo "meta_path=$META_PATH" >> "$GITHUB_OUTPUT"
 
+          echo ""
           echo "Lesson created:"
           echo "$LESSON_PATH"
 
@@ -128,7 +148,7 @@ jobs:
             --lesson "${{ steps.lesson.outputs.lesson_path }}"
 
       # ------------------------------------------------------------
-      # 8. Collect generated file paths
+      # 8. Collect generated output paths
       # ------------------------------------------------------------
       - name: Collect outputs
         id: outputs
@@ -141,8 +161,6 @@ jobs:
           PDF="${TXT%.txt}.pdf"
           JSON="${TXT%.txt}.json"
 
-          echo "Checking generated files..."
-
           test -f "$TXT"
           test -f "$MP3"
           test -f "$PDF"
@@ -153,6 +171,7 @@ jobs:
           echo "pdf=$PDF" >> "$GITHUB_OUTPUT"
           echo "json=$JSON" >> "$GITHUB_OUTPUT"
 
+          echo ""
           echo "Generated files:"
           ls -lh "$TXT"
           ls -lh "$MP3"
@@ -160,7 +179,44 @@ jobs:
           ls -lh "$JSON"
 
       # ------------------------------------------------------------
-      # 9. Upload GitHub Actions artifact
+      # 9. Determine curriculum Day number
+      #
+      # Example:
+      #
+      # lessons/day_003_2026-08-14.txt
+      #
+      # becomes:
+      #
+      # day_003
+      # ------------------------------------------------------------
+      - name: Determine Day number
+        id: dayinfo
+        shell: bash
+        run: |
+          set -e
+
+          TXT="${{ steps.outputs.outputs.txt }}"
+
+          FILE=$(basename "$TXT")
+
+          DAY_ID=$(echo "$FILE" \
+            | sed -n 's/^\(day_[0-9][0-9][0-9]\)_.*/\1/p')
+
+          if [ -z "$DAY_ID" ]; then
+            echo "ERROR: Could not determine Day number."
+            echo "Filename:"
+            echo "$FILE"
+            exit 1
+          fi
+
+          echo "day_id=$DAY_ID" >> "$GITHUB_OUTPUT"
+
+          echo ""
+          echo "Curriculum Day:"
+          echo "$DAY_ID"
+
+      # ------------------------------------------------------------
+      # 10. Upload GitHub Actions artifact
       # ------------------------------------------------------------
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -175,10 +231,50 @@ jobs:
           if-no-files-found: error
 
       # ------------------------------------------------------------
-      # 10. Update fixed "latest" files
+      # 11. Create permanent Day-number archive
       #
-      # Only automatic / next-day execution updates latest files.
-      # Manual execution with a specific day will NOT overwrite them.
+      # Example:
+      #
+      # lessons/by-day/day_003.mp3
+      # lessons/by-day/day_003.pdf
+      # lessons/by-day/day_003.txt
+      # lessons/by-day/day_003.json
+      #
+      # These URLs never contain a date.
+      # ------------------------------------------------------------
+      - name: Update Day archive
+        shell: bash
+        run: |
+          set -e
+
+          TXT="${{ steps.outputs.outputs.txt }}"
+          MP3="${{ steps.outputs.outputs.mp3 }}"
+          PDF="${{ steps.outputs.outputs.pdf }}"
+          JSON="${{ steps.outputs.outputs.json }}"
+
+          DAY_ID="${{ steps.dayinfo.outputs.day_id }}"
+
+          mkdir -p lessons/by-day
+
+          cp "$TXT"  "lessons/by-day/${DAY_ID}.txt"
+          cp "$MP3"  "lessons/by-day/${DAY_ID}.mp3"
+          cp "$PDF"  "lessons/by-day/${DAY_ID}.pdf"
+          cp "$JSON" "lessons/by-day/${DAY_ID}.json"
+
+          echo ""
+          echo "Day archive updated:"
+          ls -lh "lessons/by-day/${DAY_ID}.txt"
+          ls -lh "lessons/by-day/${DAY_ID}.mp3"
+          ls -lh "lessons/by-day/${DAY_ID}.pdf"
+          ls -lh "lessons/by-day/${DAY_ID}.json"
+
+      # ------------------------------------------------------------
+      # 12. Update latest files
+      #
+      # Only normal automatic/next-day execution changes latest.*
+      #
+      # A manual run for an old Day will NOT accidentally replace
+      # the current latest lesson.
       # ------------------------------------------------------------
       - name: Update latest lesson files
         if: ${{ inputs.day == '' }}
@@ -191,82 +287,112 @@ jobs:
           PDF="${{ steps.outputs.outputs.pdf }}"
           JSON="${{ steps.outputs.outputs.json }}"
 
-          cp "$TXT" lessons/latest.txt
-          cp "$MP3" lessons/latest.mp3
-          cp "$PDF" lessons/latest.pdf
+          cp "$TXT"  lessons/latest.txt
+          cp "$MP3"  lessons/latest.mp3
+          cp "$PDF"  lessons/latest.pdf
           cp "$JSON" lessons/latest.json
 
+          echo ""
           echo "Latest lesson files updated:"
+
           ls -lh lessons/latest.txt
           ls -lh lessons/latest.mp3
           ls -lh lessons/latest.pdf
           ls -lh lessons/latest.json
 
       # ------------------------------------------------------------
-      # 11. Save progress + generated lesson files to GitHub
+      # 13. Commit lesson files to repository
       #
-      # This runs only for normal automatic/next-day generation.
+      # IMPORTANT:
+      #
+      # Day archive is also committed for manually generated Days.
+      #
+      # progress.json is committed ONLY for automatic next-Day runs.
       # ------------------------------------------------------------
-      - name: Save progress and lesson files
-        if: ${{ inputs.day == '' }}
+      - name: Save lesson files
         shell: bash
         run: |
           set -e
 
           git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email \
+            "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add curriculum/progress.json
+          # Original generated lesson files
+          git add lessons/*.txt || true
+          git add lessons/*.json || true
+          git add lessons/*.pdf || true
+          git add lessons/*.mp3 || true
 
-          git add lessons/*.txt
-          git add lessons/*.json
-          git add lessons/*.pdf
-          git add lessons/*.mp3
+          # Permanent Day-number archive
+          git add lessons/by-day/
+
+          # Only automatic execution updates curriculum progress
+          if [ -z "${{ inputs.day }}" ]; then
+            git add curriculum/progress.json
+          fi
 
           if git diff --cached --quiet; then
+
             echo "No changes to commit."
+
           else
+
+            echo ""
             echo "Changes detected."
 
-            git commit -m "Add AI Daily Academy lesson"
+            git commit -m \
+              "Add AI Daily Academy ${{ steps.dayinfo.outputs.day_id }}"
 
             git pull --rebase --autostash origin main
 
             git push origin main
 
+            echo ""
             echo "Lesson successfully saved to GitHub."
+
           fi
 
       # ------------------------------------------------------------
-      # 12. Final confirmation
+      # 14. Completion summary
       # ------------------------------------------------------------
       - name: Show completion summary
         shell: bash
         run: |
-          echo "========================================"
-          echo "AI Daily Academy generation completed."
-          echo "========================================"
+          echo "=========================================="
+          echo " AI Daily Academy generation completed"
+          echo "=========================================="
           echo ""
-          echo "TXT:"
+
+          echo "Day:"
+          echo "${{ steps.dayinfo.outputs.day_id }}"
+          echo ""
+
+          echo "Original files:"
           echo "${{ steps.outputs.outputs.txt }}"
-          echo ""
-          echo "MP3:"
           echo "${{ steps.outputs.outputs.mp3 }}"
-          echo ""
-          echo "PDF:"
           echo "${{ steps.outputs.outputs.pdf }}"
-          echo ""
-          echo "JSON:"
           echo "${{ steps.outputs.outputs.json }}"
           echo ""
 
+          echo "Permanent Day archive:"
+          echo "lessons/by-day/${{ steps.dayinfo.outputs.day_id }}.mp3"
+          echo "lessons/by-day/${{ steps.dayinfo.outputs.day_id }}.pdf"
+          echo "lessons/by-day/${{ steps.dayinfo.outputs.day_id }}.txt"
+          echo "lessons/by-day/${{ steps.dayinfo.outputs.day_id }}.json"
+          echo ""
+
           if [ -z "${{ inputs.day }}" ]; then
-            echo "Latest files:"
+
+            echo "Latest files updated:"
             echo "lessons/latest.mp3"
             echo "lessons/latest.pdf"
             echo "lessons/latest.txt"
             echo "lessons/latest.json"
+
           else
-            echo "Manual specific-day execution."
-            echo "latest.* files were not changed."
+
+            echo "Manual Day generation."
+            echo "latest.* files were NOT changed."
+
           fi
