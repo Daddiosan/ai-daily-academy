@@ -8,7 +8,7 @@ on:
         required: false
         type: string
   schedule:
-    - cron: "0 21 * * *" # 05:00 JST
+    - cron: "0 20 * * *" # 05:00 JST
 
 permissions:
   contents: write
@@ -53,11 +53,15 @@ jobs:
           else
             OUTPUT=$(python scripts/create_lesson.py)
           fi
+
           echo "$OUTPUT"
+
           LESSON_PATH=$(echo "$OUTPUT" | sed -n 's/^LESSON_PATH=//p' | tail -n 1)
           META_PATH=$(echo "$OUTPUT" | sed -n 's/^META_PATH=//p' | tail -n 1)
+
           test -n "$LESSON_PATH"
           test -f "$LESSON_PATH"
+
           echo "lesson_path=$LESSON_PATH" >> "$GITHUB_OUTPUT"
           echo "meta_path=$META_PATH" >> "$GITHUB_OUTPUT"
 
@@ -66,10 +70,12 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TTS_MODEL: gpt-4o-mini-tts
           TTS_VOICE: marin
-        run: python scripts/create_audio.py --lesson "${{ steps.lesson.outputs.lesson_path }}"
+        run: |
+          python scripts/create_audio.py --lesson "${{ steps.lesson.outputs.lesson_path }}"
 
       - name: Create PDF
-        run: python scripts/create_pdf.py --lesson "${{ steps.lesson.outputs.lesson_path }}"
+        run: |
+          python scripts/create_pdf.py --lesson "${{ steps.lesson.outputs.lesson_path }}"
 
       - name: Collect outputs
         id: outputs
@@ -79,10 +85,12 @@ jobs:
           MP3="${TXT%.txt}.mp3"
           PDF="${TXT%.txt}.pdf"
           JSON="${TXT%.txt}.json"
+
           test -f "$TXT"
           test -f "$MP3"
           test -f "$PDF"
           test -f "$JSON"
+
           echo "txt=$TXT" >> "$GITHUB_OUTPUT"
           echo "mp3=$MP3" >> "$GITHUB_OUTPUT"
           echo "pdf=$PDF" >> "$GITHUB_OUTPUT"
@@ -99,17 +107,23 @@ jobs:
             ${{ steps.outputs.outputs.json }}
           retention-days: 30
 
-      - name: Save progress and text/PDF
+      - name: Save progress and lesson files
         if: ${{ inputs.day == '' }}
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add curriculum/progress.json lessons/*.txt lessons/*.json lessons/*.pdf
+
+          git add curriculum/progress.json
+          git add lessons/*.txt
+          git add lessons/*.json
+          git add lessons/*.pdf
+          git add lessons/*.mp3
+
           if git diff --cached --quiet; then
             echo "No changes."
           else
             git commit -m "Add AI Daily Academy lesson"
-            git pull --rebase origin main
+            git pull --rebase --autostash origin main
             git push origin main
           fi
