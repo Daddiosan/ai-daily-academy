@@ -1,31 +1,11 @@
 {
-  "current_day": 5,
+  "current_day": 1,
   "last_completed_date": "2026-08-14",
   "completed": [
     {
       "day": 1,
       "date": "2026-08-14",
       "topic": "生成AIとLLM"
-    },
-    {
-      "day": 2,
-      "date": "2026-08-14",
-      "topic": "トークンとコンテキスト"
-    },
-    {
-      "day": 3,
-      "date": "2026-08-14",
-      "topic": "Embeddingとベクトル"
-    },
-    {
-      "day": 4,
-      "date": "2026-08-14",
-      "topic": "学習と推論"
-    },
-    {
-      "day": 5,
-      "date": "2026-08-14",
-      "topic": "ハルシネーション"
     }
   ]
 }
