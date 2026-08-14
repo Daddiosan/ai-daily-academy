@@ -21,14 +21,20 @@ def main():
     args=ap.parse_args()
     if not os.getenv("OPENAI_API_KEY"):
         raise RuntimeError("OPENAI_API_KEY is not set")
-    c=load_json(CURRICULUM_PATH); p=load_json(PROGRESS_PATH)
+
+    c=load_json(CURRICULUM_PATH)
+    p=load_json(PROGRESS_PATH)
     override=args.day is not None
-    day=args.day if override else p["current_day"]+1
-    if day<1 or day>len(c["days"]): raise RuntimeError("day out of range")
+    day=args.day if override else int(p.get("current_day",0))+1
+
+    if day<1 or day>len(c["days"]):
+        raise RuntimeError("day out of range")
+
     item=c["days"][day-1]
     prev=c["days"][max(0,day-4):day-1]
     today=datetime.now(TZ).strftime("%Y-%m-%d")
     prevtxt="\n".join(f"Day {x['day']}: {x['topic']}" for x in prev) or "なし（初回）"
+
     prompt=f"""
 あなたは『AI Daily Academy』の主任講師兼編集者です。日本時間の今日の日付は {today}。
 Week {item['week']}「{item['week_title']}」 / Day {day}「{item['topic']}」
@@ -71,16 +77,24 @@ Week {item['week']}「{item['week_title']}」 / Day {day}「{item['topic']}」
     client=OpenAI()
     r=client.responses.create(model=MODEL,tools=[{"type":"web_search"}],input=prompt)
     lesson=r.output_text.strip()
+
     LESSONS_DIR.mkdir(exist_ok=True)
     stem=f"day_{day:03d}_{today}"
-    txt=LESSONS_DIR/f"{stem}.txt"; meta=LESSONS_DIR/f"{stem}.json"
+    txt=LESSONS_DIR/f"{stem}.txt"
+    meta=LESSONS_DIR/f"{stem}.json"
     txt.write_text(lesson,encoding="utf-8")
     save_json(meta,{"day":day,"week":item["week"],"week_title":item["week_title"],"topic":item["topic"],"date_jst":today,"model":MODEL,"lesson_file":txt.name})
-    if not override:
-        p["current_day"]=day; p["last_completed_date"]=today
-        p.setdefault("completed",[]).append({"day":day,"date":today,"topic":item["topic"]})
-        save_json(PROGRESS_PATH,p)
-    print(txt)
-    print(meta)
 
-if __name__=="__main__": main()
+    if not override:
+        p["current_day"]=day
+        p["last_completed_date"]=today
+        completed=p.setdefault("completed",[])
+        if not any(x.get("day")==day for x in completed):
+            completed.append({"day":day,"date":today,"topic":item["topic"]})
+        save_json(PROGRESS_PATH,p)
+
+    print(f"LESSON_PATH={txt}")
+    print(f"META_PATH={meta}")
+
+if __name__=="__main__":
+    main()
