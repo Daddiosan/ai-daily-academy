@@ -8,6 +8,12 @@ on:
         required: false
         type: string
 
+      reset_to_day1:
+        description: "Reset progress and restart from Day 1"
+        required: false
+        default: false
+        type: boolean
+
   schedule:
     # 05:00 JST
     # GitHub Actions cron uses UTC.
@@ -27,6 +33,7 @@ jobs:
     timeout-minutes: 45
 
     steps:
+
       # ------------------------------------------------------------
       # 1. Checkout
       # ------------------------------------------------------------
@@ -67,6 +74,18 @@ jobs:
 
       # ------------------------------------------------------------
       # 5. Create lesson
+      #
+      # Three modes:
+      #
+      # A. reset_to_day1 = true
+      #    -> Reset progress and create Day 1
+      #
+      # B. day specified
+      #    -> Create only that Day
+      #       without changing progress
+      #
+      # C. Normal / scheduled execution
+      #    -> Create next Day automatically
       # ------------------------------------------------------------
       - name: Create lesson
         id: lesson
@@ -77,17 +96,32 @@ jobs:
         run: |
           set -e
 
-          if [ -n "${{ inputs.day }}" ]; then
+          if [ "${{ inputs.reset_to_day1 }}" = "true" ]; then
 
-            echo "Creating specified curriculum day:"
+            echo "=========================================="
+            echo " RESET MODE"
+            echo " Resetting progress and creating Day 1"
+            echo "=========================================="
+
+            OUTPUT=$(python scripts/create_lesson.py --reset)
+
+          elif [ -n "${{ inputs.day }}" ]; then
+
+            echo "=========================================="
+            echo " MANUAL DAY MODE"
+            echo " Creating specified curriculum day:"
             echo "${{ inputs.day }}"
+            echo "=========================================="
 
             OUTPUT=$(python scripts/create_lesson.py \
               --day "${{ inputs.day }}")
 
           else
 
-            echo "Creating next curriculum day automatically."
+            echo "=========================================="
+            echo " AUTOMATIC MODE"
+            echo " Creating next curriculum day automatically"
+            echo "=========================================="
 
             OUTPUT=$(python scripts/create_lesson.py)
 
@@ -124,7 +158,7 @@ jobs:
       # ------------------------------------------------------------
       # 6. Create MP3
       # ------------------------------------------------------------
-      - name: Create MP3 at 1.1x
+      - name: Create MP3
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TTS_MODEL: gpt-4o-mini-tts
@@ -180,14 +214,6 @@ jobs:
 
       # ------------------------------------------------------------
       # 9. Determine curriculum Day number
-      #
-      # Example:
-      #
-      # lessons/day_003_2026-08-14.txt
-      #
-      # becomes:
-      #
-      # day_003
       # ------------------------------------------------------------
       - name: Determine Day number
         id: dayinfo
@@ -232,15 +258,6 @@ jobs:
 
       # ------------------------------------------------------------
       # 11. Create permanent Day-number archive
-      #
-      # Example:
-      #
-      # lessons/by-day/day_003.mp3
-      # lessons/by-day/day_003.pdf
-      # lessons/by-day/day_003.txt
-      # lessons/by-day/day_003.json
-      #
-      # These URLs never contain a date.
       # ------------------------------------------------------------
       - name: Update Day archive
         shell: bash
@@ -263,6 +280,7 @@ jobs:
 
           echo ""
           echo "Day archive updated:"
+
           ls -lh "lessons/by-day/${DAY_ID}.txt"
           ls -lh "lessons/by-day/${DAY_ID}.mp3"
           ls -lh "lessons/by-day/${DAY_ID}.pdf"
@@ -271,10 +289,14 @@ jobs:
       # ------------------------------------------------------------
       # 12. Update latest files
       #
-      # Only normal automatic/next-day execution changes latest.*
+      # Normal automatic execution:
+      #   YES
       #
-      # A manual run for an old Day will NOT accidentally replace
-      # the current latest lesson.
+      # Reset to Day1:
+      #   YES
+      #
+      # Manual specific Day:
+      #   NO
       # ------------------------------------------------------------
       - name: Update latest lesson files
         if: ${{ inputs.day == '' }}
@@ -301,13 +323,7 @@ jobs:
           ls -lh lessons/latest.json
 
       # ------------------------------------------------------------
-      # 13. Commit lesson files to repository
-      #
-      # IMPORTANT:
-      #
-      # Day archive is also committed for manually generated Days.
-      #
-      # progress.json is committed ONLY for automatic next-Day runs.
+      # 13. Save generated files
       # ------------------------------------------------------------
       - name: Save lesson files
         shell: bash
@@ -318,16 +334,21 @@ jobs:
           git config user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Original generated lesson files
+          # Generated dated files
           git add lessons/*.txt || true
           git add lessons/*.json || true
           git add lessons/*.pdf || true
           git add lessons/*.mp3 || true
 
-          # Permanent Day-number archive
+          # Permanent Day archive
           git add lessons/by-day/
 
-          # Only automatic execution updates curriculum progress
+          # Progress is updated for:
+          #
+          # 1. normal automatic execution
+          # 2. reset-to-Day1 execution
+          #
+          # A manually specified Day does NOT update progress.
           if [ -z "${{ inputs.day }}" ]; then
             git add curriculum/progress.json
           fi
@@ -382,17 +403,22 @@ jobs:
           echo "lessons/by-day/${{ steps.dayinfo.outputs.day_id }}.json"
           echo ""
 
-          if [ -z "${{ inputs.day }}" ]; then
+          if [ "${{ inputs.reset_to_day1 }}" = "true" ]; then
 
-            echo "Latest files updated:"
-            echo "lessons/latest.mp3"
-            echo "lessons/latest.pdf"
-            echo "lessons/latest.txt"
-            echo "lessons/latest.json"
+            echo "RESET MODE completed."
+            echo "Curriculum restarted from Day 1."
+            echo ""
+            echo "Next scheduled execution will create Day 2."
 
-          else
+          elif [ -n "${{ inputs.day }}" ]; then
 
             echo "Manual Day generation."
             echo "latest.* files were NOT changed."
+            echo "Curriculum progress was NOT changed."
+
+          else
+
+            echo "Automatic next-Day generation."
+            echo "latest.* files were updated."
 
           fi
