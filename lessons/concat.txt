@@ -1,7 +1,0 @@
-file '/home/runner/work/ai-daily-academy/ai-daily-academy/lessons/day_001_2026-08-14_audio_parts/part_001.mp3'
-file '/home/runner/work/ai-daily-academy/ai-daily-academy/lessons/day_001_2026-08-14_audio_parts/part_002.mp3'
-file '/home/runner/work/ai-daily-academy/ai-daily-academy/lessons/day_001_2026-08-14_audio_parts/part_003.mp3'
-file '/home/runner/work/ai-daily-academy/ai-daily-academy/lessons/day_001_2026-08-14_audio_parts/part_004.mp3'
-file '/home/runner/work/ai-daily-academy/ai-daily-academy/lessons/day_001_2026-08-14_audio_parts/part_005.mp3'
-file '/home/runner/work/ai-daily-academy/ai-daily-academy/lessons/day_001_2026-08-14_audio_parts/part_006.mp3'
-file '/home/runner/work/ai-daily-academy/ai-daily-academy/lessons/day_001_2026-08-14_audio_parts/part_007.mp3'
