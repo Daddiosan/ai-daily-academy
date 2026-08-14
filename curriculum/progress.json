@@ -1,5 +1,5 @@
 {
-  "current_day": 4,
+  "current_day": 5,
   "last_completed_date": "2026-08-14",
   "completed": [
     {
@@ -21,6 +21,11 @@
       "day": 4,
       "date": "2026-08-14",
       "topic": "学習と推論"
+    },
+    {
+      "day": 5,
+      "date": "2026-08-14",
+      "topic": "ハルシネーション"
     }
   ]
 }
