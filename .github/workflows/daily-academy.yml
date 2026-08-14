@@ -42,34 +42,47 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Create lesson
+        id: lesson
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LESSON_MODEL: gpt-5.6-terra
+        shell: bash
         run: |
           if [ -n "${{ inputs.day }}" ]; then
-            python scripts/create_lesson.py --day "${{ inputs.day }}"
+            OUTPUT=$(python scripts/create_lesson.py --day "${{ inputs.day }}")
           else
-            python scripts/create_lesson.py
+            OUTPUT=$(python scripts/create_lesson.py)
           fi
+          echo "$OUTPUT"
+          LESSON_PATH=$(echo "$OUTPUT" | sed -n 's/^LESSON_PATH=//p' | tail -n 1)
+          META_PATH=$(echo "$OUTPUT" | sed -n 's/^META_PATH=//p' | tail -n 1)
+          test -n "$LESSON_PATH"
+          test -f "$LESSON_PATH"
+          echo "lesson_path=$LESSON_PATH" >> "$GITHUB_OUTPUT"
+          echo "meta_path=$META_PATH" >> "$GITHUB_OUTPUT"
 
-      - name: Create MP3
+      - name: Create MP3 at 1.1x
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           TTS_MODEL: gpt-4o-mini-tts
           TTS_VOICE: marin
-        run: python scripts/create_audio.py
+        run: python scripts/create_audio.py --lesson "${{ steps.lesson.outputs.lesson_path }}"
 
       - name: Create PDF
-        run: python scripts/create_pdf.py
+        run: python scripts/create_pdf.py --lesson "${{ steps.lesson.outputs.lesson_path }}"
 
       - name: Collect outputs
         id: outputs
         shell: bash
         run: |
-          TXT=$(ls -t lessons/day_*.txt | head -n 1)
+          TXT="${{ steps.lesson.outputs.lesson_path }}"
           MP3="${TXT%.txt}.mp3"
           PDF="${TXT%.txt}.pdf"
           JSON="${TXT%.txt}.json"
+          test -f "$TXT"
+          test -f "$MP3"
+          test -f "$PDF"
+          test -f "$JSON"
           echo "txt=$TXT" >> "$GITHUB_OUTPUT"
           echo "mp3=$MP3" >> "$GITHUB_OUTPUT"
           echo "pdf=$PDF" >> "$GITHUB_OUTPUT"
