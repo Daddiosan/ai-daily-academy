@@ -1,11 +1,16 @@
 {
-  "current_day": 1,
-  "last_completed_date": "2026-08-14",
+  "current_day": 2,
+  "last_completed_date": "2026-08-15",
   "completed": [
     {
       "day": 1,
       "date": "2026-08-14",
       "topic": "生成AIとLLM"
+    },
+    {
+      "day": 2,
+      "date": "2026-08-15",
+      "topic": "トークンとコンテキスト"
     }
   ]
 }
