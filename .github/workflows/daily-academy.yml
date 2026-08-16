@@ -30,8 +30,6 @@ concurrency:
 jobs:
   build-daily-lesson:
     runs-on: ubuntu-latest
-
-    # Safety margin for temporary GitHub runner / network delays.
     timeout-minutes: 45
 
     steps:
@@ -55,12 +53,8 @@ jobs:
       # ------------------------------------------------------------
       # 3. Check / install ffmpeg
       #
-      # GitHub hosted runners often already include ffmpeg.
-      # If it exists, skip apt completely.
-      #
-      # This avoids unnecessary apt-get update/install work and
-      # reduces the chance of getting stuck on a temporary package
-      # mirror/network issue.
+      # GitHub hosted runners normally already include ffmpeg.
+      # If it exists, skip apt-get completely.
       # ------------------------------------------------------------
       - name: Check ffmpeg
         shell: bash
@@ -111,8 +105,6 @@ jobs:
 
       # ------------------------------------------------------------
       # 5. Create lesson
-      #
-      # Three modes:
       #
       # A. reset_to_day1 = true
       #    -> Reset progress and create Day 1
@@ -288,6 +280,9 @@ jobs:
 
       # ------------------------------------------------------------
       # 10. Upload GitHub Actions artifact
+      #
+      # Artifact keeps all four generated files for troubleshooting.
+      # This does NOT create duplicate files in the repository.
       # ------------------------------------------------------------
       - name: Upload artifact
         uses: actions/upload-artifact@v4
@@ -302,35 +297,29 @@ jobs:
           if-no-files-found: error
 
       # ------------------------------------------------------------
-      # 11. Create permanent Day-number archive
+      # 11. Create permanent Day-number MP3 archive
+      #
+      # by-day contains MP3 ONLY.
+      #
+      # Example:
+      # lessons/by-day/day_001.mp3
+      # lessons/by-day/day_002.mp3
       # ------------------------------------------------------------
-      - name: Update Day archive
+      - name: Update Day MP3 archive
         shell: bash
         run: |
           set -euo pipefail
 
-          TXT="${{ steps.outputs.outputs.txt }}"
           MP3="${{ steps.outputs.outputs.mp3 }}"
-          PDF="${{ steps.outputs.outputs.pdf }}"
-          JSON="${{ steps.outputs.outputs.json }}"
-
           DAY_ID="${{ steps.dayinfo.outputs.day_id }}"
 
           mkdir -p lessons/by-day
 
-          cp "$TXT"  "lessons/by-day/${DAY_ID}.txt"
-          cp "$MP3"  "lessons/by-day/${DAY_ID}.mp3"
-          cp "$PDF"  "lessons/by-day/${DAY_ID}.pdf"
-          cp "$JSON" "lessons/by-day/${DAY_ID}.json"
+          cp "$MP3" "lessons/by-day/${DAY_ID}.mp3"
 
           echo ""
-          echo "Day archive updated:"
-
-          ls -lh "lessons/by-day/${DAY_ID}.txt"
+          echo "Day MP3 archive updated:"
           ls -lh "lessons/by-day/${DAY_ID}.mp3"
-          ls -lh "lessons/by-day/${DAY_ID}.pdf"
-          ls -lh "lessons/by-day/${DAY_ID}.txt"
-          ls -lh "lessons/by-day/${DAY_ID}.json"
 
       # ------------------------------------------------------------
       # 12. Update latest files
@@ -380,21 +369,21 @@ jobs:
           git config user.email \
             "41898282+github-actions[bot]@users.noreply.github.com"
 
-          # Generated dated files
+          # Original generated files.
           git add lessons/*.txt || true
           git add lessons/*.json || true
           git add lessons/*.pdf || true
           git add lessons/*.mp3 || true
 
-          # Permanent Day archive
-          git add lessons/by-day/
+          # by-day contains MP3 only.
+          git add lessons/by-day/*.mp3 || true
 
           # Progress is updated for:
           #
-          # 1. normal automatic execution
-          # 2. reset-to-Day1 execution
+          # 1. Normal automatic execution
+          # 2. Reset-to-Day1 execution
           #
-          # A manually specified Day does NOT update progress.
+          # Manually specifying a Day does NOT update progress.
           if [ -z "${{ inputs.day }}" ]; then
             git add curriculum/progress.json
           fi
@@ -437,18 +426,15 @@ jobs:
           echo "${{ steps.dayinfo.outputs.day_id }}"
           echo ""
 
-          echo "Original files:"
+          echo "Original generated files:"
           echo "${{ steps.outputs.outputs.txt }}"
           echo "${{ steps.outputs.outputs.mp3 }}"
           echo "${{ steps.outputs.outputs.pdf }}"
           echo "${{ steps.outputs.outputs.json }}"
           echo ""
 
-          echo "Permanent Day archive:"
+          echo "Permanent Day MP3 archive:"
           echo "lessons/by-day/${{ steps.dayinfo.outputs.day_id }}.mp3"
-          echo "lessons/by-day/${{ steps.dayinfo.outputs.day_id }}.pdf"
-          echo "lessons/by-day/${{ steps.dayinfo.outputs.day_id }}.txt"
-          echo "lessons/by-day/${{ steps.dayinfo.outputs.day_id }}.json"
           echo ""
 
           if [ "${{ inputs.reset_to_day1 }}" = "true" ]; then
