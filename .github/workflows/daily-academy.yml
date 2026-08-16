@@ -31,8 +31,7 @@ jobs:
   build-daily-lesson:
     runs-on: ubuntu-latest
 
-    # Increased from 45 minutes to 90 minutes.
-    # Prevents cancellation when apt/ffmpeg or generation is unusually slow.
+    # Safety margin for temporary GitHub runner / network delays.
     timeout-minutes: 90
 
     steps:
@@ -54,22 +53,45 @@ jobs:
           python-version: "3.12"
 
       # ------------------------------------------------------------
-      # 3. Install ffmpeg
+      # 3. Check / install ffmpeg
+      #
+      # GitHub hosted runners often already include ffmpeg.
+      # If it exists, skip apt completely.
+      #
+      # This avoids unnecessary apt-get update/install work and
+      # reduces the chance of getting stuck on a temporary package
+      # mirror/network issue.
       # ------------------------------------------------------------
-      - name: Install ffmpeg
+      - name: Check ffmpeg
         shell: bash
         run: |
           set -euo pipefail
 
           echo "=========================================="
-          echo " Installing ffmpeg"
+          echo " Checking ffmpeg"
           echo "=========================================="
 
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg
+          if command -v ffmpeg >/dev/null 2>&1; then
+
+            echo "ffmpeg is already installed."
+            echo "Skipping apt-get."
+
+          else
+
+            echo "ffmpeg was not found."
+            echo "Installing ffmpeg..."
+
+            sudo apt-get update
+            sudo apt-get install -y ffmpeg
+
+          fi
 
           echo ""
-          echo "ffmpeg installed:"
+          echo "ffmpeg path:"
+          command -v ffmpeg
+
+          echo ""
+          echo "ffmpeg version:"
           ffmpeg -version | head -n 1
 
       # ------------------------------------------------------------
@@ -307,6 +329,7 @@ jobs:
           ls -lh "lessons/by-day/${DAY_ID}.txt"
           ls -lh "lessons/by-day/${DAY_ID}.mp3"
           ls -lh "lessons/by-day/${DAY_ID}.pdf"
+          ls -lh "lessons/by-day/${DAY_ID}.txt"
           ls -lh "lessons/by-day/${DAY_ID}.json"
 
       # ------------------------------------------------------------
