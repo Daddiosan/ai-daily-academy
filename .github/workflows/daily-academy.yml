@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Safety margin for temporary GitHub runner / network delays.
-    timeout-minutes: 90
+    timeout-minutes: 45
 
     steps:
 
