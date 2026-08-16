@@ -30,7 +30,10 @@ concurrency:
 jobs:
   build-daily-lesson:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+
+    # Increased from 45 minutes to 90 minutes.
+    # Prevents cancellation when apt/ffmpeg or generation is unusually slow.
+    timeout-minutes: 90
 
     steps:
 
@@ -56,10 +59,18 @@ jobs:
       - name: Install ffmpeg
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
+
+          echo "=========================================="
+          echo " Installing ffmpeg"
+          echo "=========================================="
 
           sudo apt-get update
           sudo apt-get install -y ffmpeg
+
+          echo ""
+          echo "ffmpeg installed:"
+          ffmpeg -version | head -n 1
 
       # ------------------------------------------------------------
       # 4. Install Python dependencies
@@ -67,7 +78,11 @@ jobs:
       - name: Install dependencies
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
+
+          echo "=========================================="
+          echo " Installing Python dependencies"
+          echo "=========================================="
 
           python -m pip install --upgrade pip
           pip install -r requirements.txt
@@ -94,7 +109,7 @@ jobs:
           LESSON_MODEL: gpt-5.6-terra
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
 
           if [ "${{ inputs.reset_to_day1 }}" = "true" ]; then
 
@@ -165,7 +180,11 @@ jobs:
           TTS_VOICE: marin
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
+
+          echo "=========================================="
+          echo " Creating MP3"
+          echo "=========================================="
 
           python scripts/create_audio.py \
             --lesson "${{ steps.lesson.outputs.lesson_path }}"
@@ -176,7 +195,11 @@ jobs:
       - name: Create PDF
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
+
+          echo "=========================================="
+          echo " Creating PDF"
+          echo "=========================================="
 
           python scripts/create_pdf.py \
             --lesson "${{ steps.lesson.outputs.lesson_path }}"
@@ -188,7 +211,7 @@ jobs:
         id: outputs
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
 
           TXT="${{ steps.lesson.outputs.lesson_path }}"
           MP3="${TXT%.txt}.mp3"
@@ -219,7 +242,7 @@ jobs:
         id: dayinfo
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
 
           TXT="${{ steps.outputs.outputs.txt }}"
 
@@ -262,7 +285,7 @@ jobs:
       - name: Update Day archive
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
 
           TXT="${{ steps.outputs.outputs.txt }}"
           MP3="${{ steps.outputs.outputs.mp3 }}"
@@ -302,7 +325,7 @@ jobs:
         if: ${{ inputs.day == '' }}
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
 
           TXT="${{ steps.outputs.outputs.txt }}"
           MP3="${{ steps.outputs.outputs.mp3 }}"
@@ -328,7 +351,7 @@ jobs:
       - name: Save lesson files
         shell: bash
         run: |
-          set -e
+          set -euo pipefail
 
           git config user.name "github-actions[bot]"
           git config user.email \
@@ -380,6 +403,8 @@ jobs:
       - name: Show completion summary
         shell: bash
         run: |
+          set -euo pipefail
+
           echo "=========================================="
           echo " AI Daily Academy generation completed"
           echo "=========================================="
