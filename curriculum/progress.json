@@ -1,6 +1,6 @@
 {
-  "current_day": 5,
-  "last_completed_date": "2026-08-16",
+  "current_day": 6,
+  "last_completed_date": "2026-08-17",
   "completed": [
     {
       "day": 1,
@@ -26,6 +26,11 @@
       "day": 5,
       "date": "2026-08-16",
       "topic": "ハルシネーション"
+    },
+    {
+      "day": 6,
+      "date": "2026-08-17",
+      "topic": "主要モデルの違い"
     }
   ]
 }
