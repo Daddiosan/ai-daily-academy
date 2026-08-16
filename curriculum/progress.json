@@ -1,6 +1,6 @@
 {
-  "current_day": 3,
-  "last_completed_date": "2026-08-15",
+  "current_day": 4,
+  "last_completed_date": "2026-08-16",
   "completed": [
     {
       "day": 1,
@@ -16,6 +16,11 @@
       "day": 3,
       "date": "2026-08-15",
       "topic": "Embeddingとベクトル"
+    },
+    {
+      "day": 4,
+      "date": "2026-08-16",
+      "topic": "学習と推論"
     }
   ]
 }
