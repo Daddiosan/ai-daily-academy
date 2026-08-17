@@ -1,6 +1,6 @@
 {
-  "current_day": 6,
-  "last_completed_date": "2026-08-17",
+  "current_day": 7,
+  "last_completed_date": "2026-08-18",
   "completed": [
     {
       "day": 1,
@@ -31,6 +31,11 @@
       "day": 6,
       "date": "2026-08-17",
       "topic": "主要モデルの違い"
+    },
+    {
+      "day": 7,
+      "date": "2026-08-18",
+      "topic": "週次復習"
     }
   ]
 }
