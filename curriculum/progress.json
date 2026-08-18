@@ -1,6 +1,6 @@
 {
-  "current_day": 7,
-  "last_completed_date": "2026-08-18",
+  "current_day": 8,
+  "last_completed_date": "2026-08-19",
   "completed": [
     {
       "day": 1,
@@ -36,6 +36,11 @@
       "day": 7,
       "date": "2026-08-18",
       "topic": "週次復習"
+    },
+    {
+      "day": 8,
+      "date": "2026-08-19",
+      "topic": "目的・背景・制約"
     }
   ]
 }
