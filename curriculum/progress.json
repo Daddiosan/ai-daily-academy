@@ -1,6 +1,6 @@
 {
-  "current_day": 8,
-  "last_completed_date": "2026-08-19",
+  "current_day": 9,
+  "last_completed_date": "2026-08-20",
   "completed": [
     {
       "day": 1,
@@ -41,6 +41,11 @@
       "day": 8,
       "date": "2026-08-19",
       "topic": "目的・背景・制約"
+    },
+    {
+      "day": 9,
+      "date": "2026-08-20",
+      "topic": "役割と出力形式"
     }
   ]
 }
