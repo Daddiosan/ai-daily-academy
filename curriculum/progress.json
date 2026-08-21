@@ -1,6 +1,6 @@
 {
-  "current_day": 10,
-  "last_completed_date": "2026-08-21",
+  "current_day": 11,
+  "last_completed_date": "2026-08-22",
   "completed": [
     {
       "day": 1,
@@ -51,6 +51,11 @@
       "day": 10,
       "date": "2026-08-21",
       "topic": "Few-shot"
+    },
+    {
+      "day": 11,
+      "date": "2026-08-22",
+      "topic": "分解して考えさせる"
     }
   ]
 }
